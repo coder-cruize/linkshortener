@@ -8,10 +8,13 @@ import toast from "react-hot-toast";
 import folder from "../images/folder.png";
 import { Link } from "react-router-dom";
 import AppContext from "../utils/appcontext";
+import { useModal } from "../components/modal";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const appData = useContext(AppContext);
+  const { setModal } = useModal()
+
   useLayoutEffect(() => {
     setLoading(appData.data == null);
   }, [appData.data]);
@@ -64,7 +67,7 @@ export default function Home() {
     return children || null;
   }
   function createLink() {
-    appData.modal("Links");
+    setModal("Links");
     //Todo: create links here
   }
   return appData.data !== false ? (

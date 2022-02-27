@@ -4,7 +4,7 @@ const AppContext = createContext({
   data: () => {},
   reload: () => {},
   user: () => {},
-  modal: () => {},
+  newUser: false,
 });
 
 export default AppContext;

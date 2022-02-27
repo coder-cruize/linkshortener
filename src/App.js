@@ -7,6 +7,7 @@ import { Authentication, useData } from "./utils/authentication";
 import AppContext from "./utils/appcontext";
 import Loader from "./components/loader";
 import { MdOutlineErrorOutline, MdOutlineCheckCircle } from "react-icons/md";
+import { useModal } from "./components/modal";
 const Admin = lazy(() => import("./pages/Admin"));
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -16,21 +17,18 @@ const ShortLink = lazy(() => import("./pages/Shortlink"));
 const Test = lazy(() => import("./pages/Test"));
 const Links = lazy(() => import("./pages/Links"));
 const LinksData = lazy(() => import("./pages/LinksData"));
-const Modal = lazy(() => import("./components/modal"));
 const NotFound = lazy(() => import("./components/notfound"));
 
 export default function App() {
   const [isAuthenticated, Reload, user, appData, newUser] = useData();
-
+  const { modal } = useModal()
   const [loader, setLoader] = useState(true);
-  const [modal, setModal] = useState(null);
 
   let location = useLocation();
   let appDataContext = {
     data: appData,
     reload: Reload,
     user: user,
-    modal: setModal,
     newUser: newUser,
   };
   //* if loader is true render loader after 1 second check if all resources are ready if ready render main app
@@ -51,17 +49,6 @@ export default function App() {
     // Todo: for each page add a component to render in case appData = false (error). check home.js for example
     // Todo: change the default loader for suspended components
     <>
-      {modal ? (
-        <Suspense fallback={<></>}>
-          <Modal
-            close={() => {
-              setModal(null);
-            }}
-          >
-            {modal}
-          </Modal>
-        </Suspense>
-      ) : null}
       <AppContext.Provider value={appDataContext}>
         <Routes>
           <Route
@@ -177,6 +164,7 @@ export default function App() {
           }
         }}
       />
+      {modal}
     </>
   );
 }

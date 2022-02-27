@@ -6,6 +6,7 @@ import { BiLoaderAlt } from "react-icons/bi";
 import useValidateRegex from "../utils/validator";
 import { dbActions } from "../utils/crud";
 import AppContext from "../utils/appcontext";
+import toast from "react-hot-toast";
 
 function Login() {
   const [email, checkEmail, validEmail] = useValidateRegex(
@@ -22,11 +23,15 @@ function Login() {
   const submitForm = async (e) => {
     setSubmitLoading(true);
     e.preventDefault();
-    dbActions.signIn(email, password).catch((err) => {
-      console.log(err.message);
+    dbActions.signIn(email, password)
+    .then(() => {
+      toast.success(`Welcome back, ${appData.user.displayName}`)
+      appData.newUser.set(false);
+    })
+    .catch((err) => {
+      toast.error(err.message);
       setSubmitLoading(false);
     });
-    appData.newUser.set(false);
   };
   return (
     <section className="pageFrame">
@@ -84,9 +89,7 @@ function Login() {
           </Link>
         </div>
         <button
-          onClick={() =>
-            dbActions.signIn("lekanalowooja@yahoo.com", "Developer@2022")
-          }
+          onClick={() => dbActions.signIn("lekanalowooja@yahoo.com", "Developer@2022")}
         >
           Dummy Login
         </button>

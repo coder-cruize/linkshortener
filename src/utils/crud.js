@@ -7,16 +7,15 @@ export const dbActions = {
       let userData = await createUserWithEmailAndPassword(auth, email.trim(), password);
       await updateProfile(userData.user, {displayName: name})
     } catch (error) {
-      if(error.code === 'auth/email-already-in-use') throw new Error('Email already exists.')
+      if(error.code === 'auth/email-already-in-use') throw new Error('An account already exists with this Email')
     }
   },
   signIn: async (email, password) => {
     try {
-      let userData = await signInWithEmailAndPassword(auth, email.trim(), password)
-      console.log(userData.user.email)
+      await signInWithEmailAndPassword(auth, email.trim(), password)
     } catch (error) {
-      throw new Error(error.message);
-      // if(error.code === 'auth/email-already-in-use') throw new Error('Email already exists.')
+      if(error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') throw new Error('Incorrect Email or Password')
+      if(error.code === 'auth/too-many-requests') throw new Error('This account has been temporarily disabled. Try again later')
     }
   },
   signOut: async () => {
@@ -28,31 +27,3 @@ export const dbActions = {
     }
   }
 }
-
-
-// const dbActions = {
-//   signUp: async (name, email, password) => {
-//     try {
-//       let userData = await createUserWithEmailAndPassword(auth, email, password);
-//       await updateProfile(userData.user, {displayName: name,})
-//       toast("Welcome "+userData.user.displayName);
-//     } catch (error) {
-//       toast.error("MyError: " + error.message);
-//     }
-//   },
-//   signIn: async (email, password) => {
-//     try {
-//       let userData = await signInWithEmailAndPassword(auth, email, password);
-//       toast("Welcome back "+userData.user.displayName);
-//     } catch (error) {
-//       toast.error("MyError: " + error.message);
-//     }
-//   },
-//   signOut: async () => {
-//     try {
-//       await signOut(auth);
-//     } catch (error) {
-//       toast.error("Error logging out");
-//     }
-//   },
-// };

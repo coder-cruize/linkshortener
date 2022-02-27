@@ -6,6 +6,7 @@ import "./App.css";
 import { Authentication, useData } from "./utils/authentication";
 import AppContext from "./utils/appcontext";
 import Loader from "./components/loader";
+import { MdOutlineErrorOutline, MdOutlineCheckCircle } from "react-icons/md";
 const Admin = lazy(() => import("./pages/Admin"));
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -160,10 +161,21 @@ export default function App() {
           />
         </Routes>
       </AppContext.Provider>
-      {/* // Todo: change toast color to be visible at top level */}
       <Toaster
         position="top-right"
-        toastOptions={{ style: { boxShadow: "none" } }}
+        toastOptions={{
+          style: { 
+            boxShadow: "none",
+            fontFamily: 'montserrat',
+            backgroundColor: 'rgb(250, 250, 250)'
+          },
+          error: {
+            icon: <MdOutlineErrorOutline color="red" size={25}/>,
+          },
+          success: {
+            icon: <MdOutlineCheckCircle color='green' size={25}/>,
+          }
+        }}
       />
     </>
   );

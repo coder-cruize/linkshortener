@@ -16,13 +16,9 @@ export default function Home() {
     setLoading(appData.data == null);
   }, [appData.data]);
   function ShortLinkItem({ url, name, linkId }) {
-    function copy() {
-      try {
-        navigator.clipboard.writeText(url);
-        toast.success("Copied to clipboard");
-      } catch {
-        toast("Can not copy unless using localhost");
-      }
+    const copy = () => {
+      navigator.clipboard.writeText(url);
+      toast.success("Copied to clipboard");
     }
     return (
       <>

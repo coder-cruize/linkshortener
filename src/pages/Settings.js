@@ -29,17 +29,17 @@ export default function Settings() {
                   photoURL: profileURL,
                   displayName: displayName,
                 });
-                toast("Updated Profile Photo");
+                toast.success("Updated Profile Photo");
                 appData.reload();
               } catch (error) {
-                toast(error.message);
+                toast.error(error.message);
               }
             })();
           });
         })
         .catch((error) => {
           toast.error(
-            `An error occured while uploading profile. Try Again\n Error: ${error.message}`
+            `An error occured while uploading profile. Try Again Later`
           );
         });
     };

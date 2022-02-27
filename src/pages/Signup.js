@@ -15,11 +15,11 @@ function SignUp() {
     null,
     /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
   );
-  const [password, checkTest, passwordStrength] = useValidateListRegex(null, [
+  const [password, checkPassoword, passwordStrength] = useValidateListRegex(null, [
     /[a-z]+/,
     /[A-Z]+/,
     /[0-9]+/,
-    /[$@#&!]+/,
+    /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/,
   ]);
   const [submitLoading, setSubmitLoading] = useState(false);
   const appData = useContext(AppContext);
@@ -27,11 +27,15 @@ function SignUp() {
   function submitForm(e) {
     setSubmitLoading(true);
     e.preventDefault();
-    dbActions.signUp(name, email.trim(), password).catch((err) => {
+    dbActions.signUp(name, email.trim(), password)
+    .then(() => {
+      toast.success(`Welcome, ${appData.user.displayName}`)
+      appData.newUser.set(true);
+    })
+    .catch((err) => {
       toast.error(err.message);
       setSubmitLoading(false);
     });
-    appData.newUser.set(true);
   }
 
   return (
@@ -80,7 +84,7 @@ function SignUp() {
             <input
               type="password"
               id="signupPwd"
-              onChange={(e) => checkTest(e.target.value)}
+              onChange={(e) => checkPassoword(e.target.value)}
             />
             <span
               className="correctSyntax"

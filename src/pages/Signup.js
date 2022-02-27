@@ -1,89 +1,57 @@
-import { useRef, useState } from 'react';
+/* eslint-disable no-useless-escape */
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { BsGoogle } from 'react-icons/bs'
 import './css/auth.css'
+import { BiLoaderAlt } from 'react-icons/bi'
+import useValidateRegex, {useValidateListRegex} from '../components/validator';
+import { dbActions } from '../components/crud';
 import toast from 'react-hot-toast';
+import AppContext from '../components/appcontext';
 
-function SignUp(props) {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState(null)
-  const validator = useRef()
-  const [invalidEmail, setInvalidEmail] = useState(true)
-  const [invalidPassword, setInvalidPassword] = useState(true)
-  const [invalidName, setInvalidName] = useState(true)
-  const [nameSyntax, showNameSyntax] = useState(false)
-  const [emailSyntax, showEmailSyntax] = useState(false)
-  const [pwdSyntax, showPwdSyntax] = useState(false)
-  
-  const checkName = (name) => {
-    setName(name)
-    function setValidation(isValid){
-      showNameSyntax(!isValid)
-      setInvalidName(!isValid)
-    }
-    if(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(name)) setValidation(false)
-    else if(name == '') setValidation(false)
-    else if(name.length < 3) setValidation(false)
-    else if(name.includes(' ')) setValidation(false)
-    else setValidation(true)
+function SignUp() {
+  const [name, checkName, validName] = useValidateRegex(null, /[A-Za-z]{3,}/);
+  const [email, checkEmail, validEmail] = useValidateRegex(null, /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+  const [password, checkTest, passwordStrength] = useValidateListRegex(null, [/[a-z]+/,/[A-Z]+/,/[0-9]+/,/[$@#&!]+/]);
+  const [submitLoading, setSubmitLoading] = useState(false)
+  const appData = useContext(AppContext)
+
+  function submitForm(e){
+    setSubmitLoading(true)
+    e.preventDefault();
+    dbActions.signUp(name, email.trim(), password)
+    .catch(err => {
+      toast.error(err.message)
+      setSubmitLoading(false)
+    })
+    appData.newUser.set(true)
   }
-  const checkEmail = (email) => {
-    setEmail(email)
-    if(email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
-      setInvalidEmail(false)
-      showEmailSyntax(false)
-    }
-    else{
-      setInvalidEmail(true)
-      showEmailSyntax(true)
-    }
-  }
-  const checkPassword = (pwd) => {
-    setPassword(pwd)
-    let strength = 0
-    if (pwd.match(/[a-z]+/)) strength += 1
-    if (pwd.match(/[A-Z]+/)) strength += 1
-    if (pwd.match(/[0-9]+/)) strength += 1
-    if (pwd.match(/[$@#&!]+/)) strength += 1
-    function  setValidation(width, color, isValid) {
-      validator.current.style.width = width;
-      validator.current.style.backgroundColor = color
-      setInvalidPassword(!isValid)
-      showPwdSyntax(!isValid)
-    }
-    if(strength == 0) setValidation('0%', '', false)
-    else if(pwd.match(/^.{6,}$/)){
-      if(strength <= 2) setValidation('20%', 'red', false)
-      if(strength == 3) setValidation('50%', 'orange', true)
-      if(strength == 4) setValidation('100%', 'rgb(2, 189, 2)', true)
-    }
-    else setValidation('20%', 'red', false)
-  }
+
   return(
     <section className="pageFrame">
       <div className="authCard">
-        <form className='option1' spellCheck={false} style={{borderColor: '#6b21e3'}}>
+        <form className='option1' spellCheck={false} style={{borderColor: '#6b21e3'}} autoComplete='off'>
           <h1 className="formHeading" style={{color: '#6b21e3'}}>Signup</h1>
           <div className="inputFrame">
             <label htmlFor="signupName">Nickname</label>
-            <input type="text" id="signupName" onKeyUp={(e) => checkName(e.target.value)}/>
-            <span className='correctSyntax' style={{height: nameSyntax ? 15 : 0}}>At least 3 characters and not include special characters or white space</span>
+            <input type="text" id="signupName" onChange={(e) => checkName(e.target.value)}/>
+            <span className='correctSyntax' style={{height: !validName ? (name ? 15 : 0) : 0}}>At least 3 characters and not include special characters, numbers or white space</span>
           </div>
           <div className="inputFrame">
             <label htmlFor="signupEmail">Email</label>
             <input type="email" id="signupEmail" onChange={(e) => checkEmail(e.target.value)}/>
-            <span className='correctSyntax' style={{height: emailSyntax ? 15 : 0}}>Invalid email address</span>
+            <span className='correctSyntax' style={{height: !validEmail ? (email ? 15 : 0) : 0}}>Invalid email address</span>
           </div>
           <div className="inputFrame">
             <label htmlFor="signupPWd">Password</label>
-            <input type="password" id="signupPwd" onChange={(e) => checkPassword(e.target.value)}/>
-            <span className='correctSyntax' style={{height: pwdSyntax ? 30 : 0}}>At least 6 characters, 1 capital and small letter, 1 special character and <br /> 1 number</span>
+            <input type="password" id="signupPwd" onChange={(e) => checkTest(e.target.value)}/>
+            <span className='correctSyntax' style={{height: passwordStrength < 3 ? (password ? 15 : 0) : 0}}>At least 6 characters, 1 capital and small letter, 1 special character and <br /> 1 number</span>
           </div>
-          <div className="pwdValidator">
-            <span ref={validator} className="valid1" style={{backgroundColor: 'red'}}></span>
-          </div>
-          <button className='submitForm' disabled={invalidName || invalidEmail || invalidPassword} style={{backgroundColor: '#6b21e3'}} onClick={(e) => {e.preventDefault();props.main(name, email, password)}}>Signup</button>
+          <button className='submitForm' disabled={!validName || !validEmail || passwordStrength < 3} style={{backgroundColor: '#6b21e3'}} onClick={(e) => submitForm(e)}>
+            <span>
+              { !submitLoading ? 'Sign Up' : <BiLoaderAlt color='white' /> }
+            </span>
+          </button>
         </form>
         <div className="altAuth">
           <span>Already have an account?</span>

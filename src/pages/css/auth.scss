@@ -67,18 +67,6 @@
             display: block;
           }
         }
-        .pwdValidator{
-          width: 100%;
-          height: 30px;
-          margin-top: -20px;
-          @include flex(space-between, center);
-          span{
-            height: 5px;
-            width: 0;
-            border-radius: 10px;
-            transition: 0.3s;
-          }
-        }
         .submitForm{
           padding: 10px 100px;
           border-radius: 10px;
@@ -88,6 +76,15 @@
           font-family: Quicksand;
           font-weight: 500;
           transition: 0.3s;
+          span{
+            display: inline-block;
+            width: 80px;
+            height: fit-content;
+            @include flex(center, center);
+            svg{
+              animation: rotating 1s linear infinite;
+            }
+          }
           &:disabled{
             background-color: rgb(233, 233, 233) !important;
             color: rgb(196, 193, 193) !important;
@@ -115,5 +112,13 @@
         font-size: 18px;
         @include flex(center, center);
       }
+    }
+  }
+  @keyframes rotating {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
     }
   }

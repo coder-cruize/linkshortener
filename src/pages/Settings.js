@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { storage } from "../firebaseClient";
 import {
   ref,
@@ -8,14 +8,16 @@ import {
 import { updateProfile } from "firebase/auth";
 import Crop from "../components/crop";
 import toast from "react-hot-toast";
+import AppContext from "../components/appcontext";
 
-export default function Settings(props) {
+export default function Settings() {
   const [fullImg, setFullImg] = useState(null);
   const [cropImg, setCropImg] = useState(null);
   const inputRef = useRef(null);
+  const appData = useContext(AppContext)
   //* Update profile
-  function setProfile(canvas, crop, displayName = props.user?.displayName) {
-    const profileRef = ref(storage, "users/" + props.user.uid + "/profile.jpg");
+  function setProfile(canvas, crop, displayName = appData.user?.displayName) {
+    const profileRef = ref(storage, "users/" + appData.user.uid + "/profile.jpg");
     const handleUpload = (file) => {
       fetch(file)
         .then((res) => res.blob())
@@ -24,12 +26,12 @@ export default function Settings(props) {
             (async () => {
               try {
                 let profileURL = await getDownloadURL(profileRef);
-                await updateProfile(props.user, {
+                await updateProfile(appData.user, {
                   photoURL: profileURL,
                   displayName: displayName,
                 });
                 toast("Updated Profile Photo");
-                props.reload();
+                appData.reload();
               } catch (error) {
                 toast(error.message);
               }
@@ -53,7 +55,7 @@ export default function Settings(props) {
   }
   return (
     <>
-    <h1>HI, {props.user.displayName || 'User'}</h1>
+    <h1>HI, {appData.user.displayName || 'User'}</h1>
       <div
         className="popup"
         style={{
@@ -76,10 +78,11 @@ export default function Settings(props) {
         >
           Update
         </button>
+        {/* //todo when updating profile show a loader and prevent user from clicking again*/}
         <button
           onClick={() => {
             setFullImg(null);
-            input.current.value = null;
+            inputRef.current.value = null;
           }}
         >
           clear

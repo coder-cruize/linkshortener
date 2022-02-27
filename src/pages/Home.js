@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import "./css/home.css";
 import { MdContentPaste } from "react-icons/md";
 import { FiEdit3 } from "react-icons/fi";
@@ -7,13 +7,14 @@ import { HiOutlineCursorClick } from 'react-icons/hi'
 import toast from "react-hot-toast";
 import folder from '../images/folder.png'
 import { Link } from "react-router-dom";
+import AppContext from "../components/appcontext";
 
-function Home({ data, modal }) {
+export default function Home() {
   const [loading, setLoading] = useState(true)
+  const appData = useContext(AppContext)
   useLayoutEffect(() =>{
-    console.log(data)
-    setLoading(data == null)
-  }, [data])
+    setLoading(appData.data == null)
+  }, [appData.data])
   function ShortLinkItem({ url, name, linkId }) {
     function copy() {
       try {
@@ -54,14 +55,14 @@ function Home({ data, modal }) {
   }
   function SkeletonLoader({children, style}) {
     if(loading) return <div style={{width: '100%', height: '100%', animation: 'skeleton-loading 1s linear infinite alternate', ...style }}></div>
-    return children
-    // todo check fro when children is empty
+    return children || null
   }
   function createLink(){
-    modal('Links') //Todo: create links here
+    appData.modal('Links')
+    //Todo: create links here
   }
   return (
-    data !== false ?
+    appData.data !== false ?
     <>
       <section className="homeContent">
         <div className="homeContentLeft">
@@ -74,7 +75,7 @@ function Home({ data, modal }) {
                     <span className="overviewItemIcon" style={{backgroundColor: 'rgba(0, 0, 255, 0.2)'}}><BiLink size={25}color='#1c06da' /></span>
                   </div>
                   <div className="overviewItemData">
-                    <span className="overviewItemDataValue">{data?.linkNum}</span>
+                    <span className="overviewItemDataValue">{appData.data?.linkNum}</span>
                     <span className="overviewItemDataTitle">Links</span>
                   </div>
                 </SkeletonLoader>
@@ -85,7 +86,7 @@ function Home({ data, modal }) {
                     <span className="overviewItemIcon" style={{backgroundColor: 'rgba(165, 3, 197, 0.2)'}}><HiOutlineCursorClick size={25}color='rgb(186, 0, 223)' /></span>
                   </div>
                   <div className="overviewItemData">
-                    <span className="overviewItemDataValue">{data?.clickNum}</span>
+                    <span className="overviewItemDataValue">{appData.data?.clickNum}</span>
                     <span className="overviewItemDataTitle">Clicks</span>
                   </div>
                 </SkeletonLoader>
@@ -111,6 +112,7 @@ function Home({ data, modal }) {
                     <span className="overviewItemDataTitle">Clicks</span>
                   </div>
                 </SkeletonLoader>
+                <SkeletonLoader></SkeletonLoader>
               </div>
             </div>
           </section>
@@ -122,14 +124,14 @@ function Home({ data, modal }) {
             <div className="linksContent">
               <SkeletonLoader style={{ marginBottom: 15, borderRadius: 15, width: 740, height: 70}}>
                 {
-                  data ?
-                  Object.keys(data.links).length > 0 ? 
-                    Object.keys(data.links).map(link => {
-                      return <ShortLinkItem name={data.links[link].name} url={data.links[link].fullLink} linkId={link} key={link} />
+                  appData.data ?
+                  Object.keys(appData.data.links).length > 0 ? 
+                    Object.keys(appData.data.links).map(link => {
+                      return <ShortLinkItem name={appData.data.links[link].name} url={appData.data.links[link].fullLink} linkId={link} key={link} />
                     })
                     : <div className="empty">
                         <span className="emptyImg">
-                          <img src={folder} loading='lazy' />
+                          <img src={folder} loading='lazy' alt=""/>
                         </span>
                         <span className="emptyText">You do not have any shortlinks</span>
                       </div>
@@ -145,18 +147,18 @@ function Home({ data, modal }) {
             <div className="statusContent">
               <SkeletonLoader style={{height: 60, borderRadius: 20, marginBottom: 15}}>
                 {
-                  data ?
-                  Object.keys(data.links).length > 0 ?   
-                    Object.keys(data.links).map(link => {
+                  appData.data ?
+                  Object.keys(appData.data.links).length > 0 ?   
+                    Object.keys(appData.data.links).map(link => {
                       return (
                         <div className="statusContentBlock" key={link}>
                           <span className="statusContentBlockText">
-                            <span className="statusContentBlockTextName">{data.links[link].name}</span>
+                            <span className="statusContentBlockTextName">{appData.data.links[link].name}</span>
                             <span className="statusContentBlockTextLink">/{link}</span>
                           </span>
                           <span className="statusContentBlockStatus">
-                            <span className="scbsDot" style={{backgroundColor: data.links[link].live ? 'green': 'red'}}></span>
-                            <span className="scbsText" style={{color: data.links[link].live ? 'green': 'red'}}>{data.links[link].live ? 'Active': 'Inactive'}</span>
+                            <span className="scbsDot" style={{backgroundColor: appData.data.links[link].live ? 'green': 'red'}}></span>
+                            <span className="scbsText" style={{color: appData.data.links[link].live ? 'green': 'red'}}>{appData.data.links[link].live ? 'Active': 'Inactive'}</span>
                           </span>
                         </div>
                       )
@@ -177,7 +179,4 @@ function Home({ data, modal }) {
       <span>'Error'</span>
     </>
   );
-
 }
-
-export default Home;

@@ -1,33 +1,53 @@
-import { useContext, useEffect } from 'react';
-import { NavLink, Outlet } from 'react-router-dom'
+import { useContext, useEffect } from "react";
+import { NavLink, Outlet } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import { RiHome6Fill } from "react-icons/ri";
-import { dbActions } from '../components/crud';
-import AppContext from '../components/appcontext';
+import { dbActions } from "../utils/crud";
+import AppContext from "../utils/appcontext";
 import logo from "../images/logo.svg";
 
 export default function Admin() {
-  const appData = useContext(AppContext)
+  const appData = useContext(AppContext);
   useEffect(() => {
-    console.log(appData.newUser.val)
-  }, [])
+    console.log(appData.newUser.val);
+  }, []);
   return (
     <div className="bodyContainer">
       <section className="sideNav">
         <div className="topItems">
           <img className="logo" src={logo} alt="" />
           <nav className="navLinks">
-            <NavLink to="/admin/home" className={({ isActive }) => (isActive ? 'navLinkActive' : 'navLinkInActive')}>
+            <NavLink
+              to="/admin/home"
+              className={({ isActive }) =>
+                isActive ? "navLinkActive" : "navLinkInActive"
+              }
+            >
               <RiHome6Fill size={25} />
             </NavLink>
-            <NavLink to="/admin/links" className={({ isActive }) => (isActive ? 'navLinkActive' : 'navLinkInActive')}>
+            <NavLink
+              to="/admin/links"
+              className={({ isActive }) =>
+                isActive ? "navLinkActive" : "navLinkInActive"
+              }
+            >
               <RiHome6Fill size={25} />
             </NavLink>
-            <NavLink to="/admin/test" className={({ isActive }) => (isActive ? 'navLinkActive' : 'navLinkInActive')}>
+            <NavLink
+              to="/admin/test"
+              className={({ isActive }) =>
+                isActive ? "navLinkActive" : "navLinkInActive"
+              }
+            >
               <RiHome6Fill size={25} />
             </NavLink>
-            <NavLink to="/admin/settings" className={({ isActive }) => (isActive ? 'navLinkActive' : 'navLinkInActive')}>
+            <NavLink
+              to="/admin/settings"
+              className={({ isActive }) =>
+                isActive ? "navLinkActive" : "navLinkInActive"
+              }
+            >
               <RiHome6Fill size={25} />
             </NavLink>
           </nav>

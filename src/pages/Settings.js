@@ -1,23 +1,22 @@
 import { useContext, useRef, useState } from "react";
 import { storage } from "../firebaseClient";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
 import Crop from "../components/crop";
 import toast from "react-hot-toast";
-import AppContext from "../components/appcontext";
+import AppContext from "../utils/appcontext";
 
 export default function Settings() {
   const [fullImg, setFullImg] = useState(null);
   const [cropImg, setCropImg] = useState(null);
   const inputRef = useRef(null);
-  const appData = useContext(AppContext)
+  const appData = useContext(AppContext);
   //* Update profile
   function setProfile(canvas, crop, displayName = appData.user?.displayName) {
-    const profileRef = ref(storage, "users/" + appData.user.uid + "/profile.jpg");
+    const profileRef = ref(
+      storage,
+      "users/" + appData.user.uid + "/profile.jpg"
+    );
     const handleUpload = (file) => {
       fetch(file)
         .then((res) => res.blob())
@@ -30,17 +29,17 @@ export default function Settings() {
                   photoURL: profileURL,
                   displayName: displayName,
                 });
-                toast("Updated Profile Photo");
+                toast.success("Updated Profile Photo");
                 appData.reload();
               } catch (error) {
-                toast(error.message);
+                toast.error(error.message);
               }
             })();
           });
         })
         .catch((error) => {
           toast.error(
-            `An error occured while uploading profile. Try Again\n Error: ${error.message}`
+            `An error occured while uploading profile. Try Again Later`
           );
         });
     };
@@ -55,7 +54,7 @@ export default function Settings() {
   }
   return (
     <>
-    <h1>HI, {appData.user.displayName || 'User'}</h1>
+      <h1>HI, {appData.user.displayName || "User"}</h1>
       <div
         className="popup"
         style={{

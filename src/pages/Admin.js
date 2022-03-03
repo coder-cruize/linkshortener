@@ -13,7 +13,7 @@ export default function Admin() {
   
   return (
     <div className="bodyContainer">
-      {appData.newUser.val === false && <OnBoard />}
+      {appData.newUser.val && <OnBoard />}
       <section className="sideNav">
         <div className="topItems">
           <img className="logo" src={logo} alt="" />

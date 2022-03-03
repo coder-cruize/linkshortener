@@ -2,10 +2,9 @@ import { auth } from "../firebaseClient";
 import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 export const dbActions = {
-  signUp: async (name, email, password) => {
+  signUp: async (email, password) => {
     try {
-      let userData = await createUserWithEmailAndPassword(auth, email.trim(), password);
-      await updateProfile(userData.user, {displayName: name})
+      await createUserWithEmailAndPassword(auth, email.trim(), password);
     } catch (error) {
       if(error.code === 'auth/email-already-in-use') throw new Error('An account already exists with this Email')
     }

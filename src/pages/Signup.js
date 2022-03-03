@@ -10,7 +10,6 @@ import { BiLoaderAlt } from "react-icons/bi";
 import "./css/auth.css";
 
 function SignUp() {
-  const [name, checkName, validName] = useValidateRegex(null, /[A-Za-z]{3,}/);
   const [email, checkEmail, validEmail] = useValidateRegex(
     null,
     /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
@@ -27,7 +26,7 @@ function SignUp() {
   function submitForm(e) {
     setSubmitLoading(true);
     e.preventDefault();
-    dbActions.signUp(name, email.trim(), password)
+    dbActions.signUp(email.trim(), password)
     .then(() => {
       toast.success(`Welcome, ${appData.user.displayName}`)
       appData.newUser.set(true);
@@ -50,21 +49,6 @@ function SignUp() {
           <h1 className="formHeading" style={{ color: "#6b21e3" }}>
             Signup
           </h1>
-          <div className="inputFrame">
-            <label htmlFor="signupName">Nickname</label>
-            <input
-              type="text"
-              id="signupName"
-              onChange={(e) => checkName(e.target.value)}
-            />
-            <span
-              className="correctSyntax"
-              style={{ height: !validName ? (name ? 15 : 0) : 0 }}
-            >
-              At least 3 characters and not include special characters, numbers
-              or white space
-            </span>
-          </div>
           <div className="inputFrame">
             <label htmlFor="signupEmail">Email</label>
             <input
@@ -96,7 +80,7 @@ function SignUp() {
           </div>
           <button
             className="submitForm"
-            disabled={!validName || !validEmail || passwordStrength < 3}
+            disabled={!validEmail || passwordStrength < 3}
             style={{ backgroundColor: "#6b21e3" }}
             onClick={(e) => submitForm(e)}
           >
@@ -111,8 +95,6 @@ function SignUp() {
             Log In
           </Link>
         </div>
-        redirect from here to a page to put name and profile <br />
-        remove name from this form and move it here ^^^
         <button className="googleAuth">
           <BsGoogle size={20} style={{ marginRight: "10px" }} />
           <span>Sign up with Google</span>

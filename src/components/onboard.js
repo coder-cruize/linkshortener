@@ -14,7 +14,7 @@ import completed from '../images/onboard_completed.png'
 import './css/onboard.css'
 
 export default function OnBoard(){
-    const [page, setPage] = useState(5) //todo change 5 to 1
+    const [page, setPage] = useState(1)
     const [submitLoading, setSubmitLoading] = useState(false)
     const onboardRef = useRef(null)
     const { setModal } = useModal()

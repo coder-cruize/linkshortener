@@ -4,10 +4,17 @@ import './css/modal.css'
 
 function useModalState() {
     const [modal, displayModal] = useState(null);
-    const setModal = (children) => {
-        console.log(children)
+    const setModal = (children, overide=false) => {
+        if(children === null) {
+            displayModal(null)
+            return
+        }
+        const hideModal = () => {
+            if(overide) return;
+            else displayModal(null)
+        }
         displayModal(
-            <div onClick={() => displayModal(null)} className='appModal'>
+            <div onClick={() => hideModal()} className='appModal'>
                 <div onClick={(e) => e.stopPropagation()}>
                     {children}
                 </div>

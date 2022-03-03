@@ -1,12 +1,12 @@
 /* eslint-disable no-useless-escape */
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import "./css/auth.css";
-import { BiLoaderAlt } from "react-icons/bi";
+import toast from "react-hot-toast";
 import useValidateRegex from "../utils/validator";
 import { dbActions } from "../utils/crud";
 import AppContext from "../utils/appcontext";
-import toast from "react-hot-toast";
+import { BiLoaderAlt } from "react-icons/bi";
+import "./css/auth.css";
 
 function Login() {
   const [email, checkEmail, validEmail] = useValidateRegex(

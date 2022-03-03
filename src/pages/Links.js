@@ -1,7 +1,8 @@
 import { useContext, useLayoutEffect, useState } from "react";
-import QrCode from "../components/qr";
-import html2canvas from "html2canvas";
+import { Link } from 'react-router-dom'
 import AppContext from "../utils/appcontext";
+import folder from "../images/folder.png";
+import './css/links.css'
 
 export default function Links() {
   const [loading, setLoading] = useState(true);
@@ -9,14 +10,6 @@ export default function Links() {
   useLayoutEffect(() => {
     setLoading(appData.data == null);
   }, [appData.data]);
-  function Download() {
-    html2canvas(document.querySelector("#react-qrcode-logo")).then((canvas) => {
-      const link = document.createElement("a");
-      link.download = "react-qrcode-logo.png";
-      link.href = canvas.toDataURL();
-      link.click();
-    });
-  }
   function SkeletonLoader({ children, style }) {
     if (loading)
       return (
@@ -34,29 +27,35 @@ export default function Links() {
   }
   return appData.data !== false ? (
     <>
-      <SkeletonLoader
-        style={{ marginBottom: 15, borderRadius: 15, width: 740, height: 70 }}
-      >
-        {appData.data ? (
-          Object.keys(appData.data.links).length > 0 ? (
-            Object.keys(appData.data.links).map((link) => {
-              return (
-                <div key={link}>
-                  {" "}
-                  <button>{appData.data.links[link].name}</button>{" "}
-                  <button>{appData.data.links[link].fullLink}</button>{" "}
-                  <button>{link}</button>
-                </div>
-              );
-            })
-          ) : (
-            <span className="emptyText">You do not have any shortlinks</span>
-          )
-        ) : null}
-      </SkeletonLoader>
-      <SkeletonLoader>{null}</SkeletonLoader>
-      <QrCode data="a" />
-      <button onClick={Download}>Download</button>
+    <section className="linksContent">
+      <h1 className="linksHeading">Links</h1>
+      <button className="linksButton">Create New Link</button>
+      <div className="linkItemContainer">
+        <SkeletonLoader style={{width: '100%', height: 100, borderRadius: 10}}>
+          {appData.data ? (
+            Object.keys(appData.data.links).length > 0 ? (
+              Object.keys(appData.data.links).map((link) => {
+                return (
+                  <Link to={`/admin/links/${link}`} className="linkItem" key={link}>
+                    <span className="linkItemTitle">{appData.data.links[link].name}</span>
+                    <span className="linkItemUrl">{appData.data.links[link].fullLink}</span>
+                  </Link>
+                );
+              })
+              ) : (
+                <div className="empty">
+                <span className="emptyImg">
+                  <img src={folder} loading="lazy" alt="" />
+                </span>
+                <span className="emptyText">
+                  You do not have any shortlinks
+                </span>
+              </div>
+            )
+          ) : null}
+        </SkeletonLoader>
+      </div>
+    </section>
     </>
   ) : (
     <>

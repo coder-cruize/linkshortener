@@ -5,7 +5,7 @@ export default function useValidateRegex(initial, regex){
     const [valid, setValid] = useState(false)
     const validate = (data) => {
         setString(data)
-        if(data.match(regex)) setValid(true)
+        if(regex.test(data)) setValid(true)
         else setValid(false)
     }
     return [string, validate, valid]
@@ -18,7 +18,7 @@ export function useValidateListRegex(initial, regex){
         let strengthTemp = 0
         setString(data)
         for(let test in regex)
-        if(data.match(regex[test])) strengthTemp += 1
+        if(regex[test].test(data)) strengthTemp += 1
         setStrength(strengthTemp)
     }
     return [string, validate, strength]

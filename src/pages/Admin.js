@@ -1,19 +1,19 @@
-import { useContext, useEffect } from "react";
+import { lazy, useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import { dbActions } from "../utils/crud";
+import AppContext from "../utils/appcontext";
 import { MdLogout } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import { RiHome6Fill } from "react-icons/ri";
-import { dbActions } from "../utils/crud";
-import AppContext from "../utils/appcontext";
 import logo from "../images/logo.svg";
+const OnBoard = lazy(() => import("../components/onboard"));
 
 export default function Admin() {
   const appData = useContext(AppContext);
-  useEffect(() => {
-    console.log(appData.newUser.val);
-  }, []);
+  
   return (
     <div className="bodyContainer">
+      {appData.newUser.val === false && <OnBoard />}
       <section className="sideNav">
         <div className="topItems">
           <img className="logo" src={logo} alt="" />

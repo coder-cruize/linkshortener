@@ -1,110 +1,162 @@
 @mixin flex($x, $y, $z:false) {
-    @if($z==true) {
-      display: inline-flex;
-    }
-    @else{
-      display: flex;  
-    }
-    justify-content: $x;
-    align-items: $y;
+  @if($z==true) {
+    display: inline-flex;
   }
+  @else{
+    display: flex;  
+  }
+  justify-content: $x;
+  align-items: $y;
+}
 
 .homeContent{
-  @include flex(unset, unset);
-  width: 100%;
-  .homeContentLeft{
-    .overview{
-      background-color: white;
-      padding: 10px 30px;
-      width: fit-content;
-      border-radius: 20px;
-      margin-bottom: 20px;
-      .overviewHeading{
-        font-family: Montserrat;
-        font-weight: 700;
-        font-size: 25px;
-        padding: 20px 0;
-      }
-      .overviewContent{
+  .homeHeading{
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 25px;
+    padding: 20px 0;
+    color: #6b21e3;
+  }
+  .homeContentFrame{
+    @include flex(unset, unset);
+    width: 100%;
+    .homeContentLeft{
+      .overview{
+        background-color: white;
+        padding: 10px 30px;
         width: fit-content;
+        border-radius: 20px;
         margin-bottom: 20px;
-        @include flex(space-between, center);
-        .overviewItem{
-          width: 150px;
-          height: 70px;
-          background-color: rgba(128, 128, 128, 0.05);
-          border-radius: 20px;
-          margin-right: 20px;
-          @include flex(space-between, center);
-          .overviewItemIconFrame{
-            width: 45%;
-            height: 100%;
-            text-align: center;
-            .overviewItemIcon{
-              margin: 10px;
-              width: 40px;
-              height: 40px;
-              border-radius: 50%;
-              @include flex(center, center);
-            }
-          }
-          .overviewItemData{
-            width: 55%;
-            height: 80%;
-            font-family: Montserrat;
-            span{
-              display: block;
-            }
-            .overviewItemDataValue{
-              font-size: 30px;
-              font-weight: 600;
-              width: 100%;
-              
-            }
-            .overviewItemDataTitle{
-              font-size: 15px;
-              width: 100%;
-              color: rgba(0, 0, 0, 0.4);
-            }
-          }
-        }
-      }
-    }
-    .links{
-      background-color: white;
-      padding: 10px 30px;
-      width: fit-content;
-      border-radius: 20px;
-      .linksHeading{
-        @include flex(space-between, center);
-        padding: 20px 0;
-        .linksHeadingText{
+        .overviewHeading{
           font-family: Montserrat;
           font-weight: 700;
           font-size: 25px;
+          padding: 20px 0;
         }
-        .linksHeadingBtn{
-          border: none;
-          padding: 10px 20px;
-          border-radius: 10px;
-          color: white;
-          font-family: Montserrat;
-          font-weight: 700;
-          background-color: #21E386;
+        .overviewContent{
+          width: fit-content;
+          margin-bottom: 20px;
+          @include flex(space-between, center);
+          .overviewItem{
+            width: 150px;
+            height: 70px;
+            background-color: rgba(128, 128, 128, 0.05);
+            border-radius: 20px;
+            margin-right: 20px;
+            @include flex(space-between, center);
+            .overviewItemIconFrame{
+              width: 45%;
+              height: 100%;
+              text-align: center;
+              .overviewItemIcon{
+                margin: 10px;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                @include flex(center, center);
+              }
+            }
+            .overviewItemData{
+              width: 55%;
+              height: 80%;
+              font-family: Montserrat;
+              span{
+                display: block;
+              }
+              .overviewItemDataValue{
+                font-size: 30px;
+                font-weight: 600;
+                width: 100%;
+                
+              }
+              .overviewItemDataTitle{
+                font-size: 15px;
+                width: 100%;
+                color: rgba(0, 0, 0, 0.4);
+              }
+            }
+          }
         }
       }
-      .linksContent{
-        padding-left: 10px;
-        .shortLink{
-          width: 700px;
-          height: 45px;
-          border-radius: 10px;
-          background-color: rgba(128, 128, 128, 0.1);
-          padding: 10px 20px;
+      .links{
+        background-color: white;
+        padding: 10px 30px;
+        width: fit-content;
+        border-radius: 20px;
+        .linksHeading{
           @include flex(space-between, center);
-          margin-bottom: 15px;
-          .shortLinkLeft{
-            @include flex(unset, center);
+          padding: 20px 0;
+          .linksHeadingText{
+            font-family: Montserrat;
+            font-weight: 700;
+            font-size: 25px;
+          }
+          .linksHeadingBtn{
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: white;
+            font-family: Montserrat;
+            font-weight: 700;
+            background-color: #21E386;
+          }
+        }
+        .linksContent{
+          padding-left: 10px;
+          .shortLink{
+            width: 700px;
+            height: 45px;
+            border-radius: 10px;
+            background-color: rgba(128, 128, 128, 0.1);
+            padding: 10px 20px;
+            @include flex(space-between, center);
+            margin-bottom: 15px;
+            .shortLinkLeft{
+              @include flex(unset, center);
+              .shortLinkTitle{
+                height: 100%;
+                @include flex(space-between, unset, true);
+                flex-direction: column;
+                .shortLinkTitleMain{
+                  font-family: Montserrat;
+                  font-weight: 600;
+                  font-size: 20px;
+                  color: rgb(94, 94, 94); 
+                }
+                .shortLinkTitleSub{
+                  font-family: 'Montserrat';
+                  margin-right: 5px;
+                  color: rgba(0, 0, 0, 0.25); 
+                }
+              }
+              .shortLinkButton{
+                margin-left: 10px;
+                border: none;
+                padding: 10px;
+                border-radius: 10px;
+                background-color: rgba(0, 0, 0, 0.05);
+                @include flex(space-between, center);
+                color: rgb(94, 94, 94);
+                .text{
+                  margin-right: 0;
+                  font-family: Montserrat;
+                  font-size: 15px;
+                  width: 0;
+                  transition: 0.3s;
+                }
+                &:hover{
+                  background-color: #6b21e3;
+                  color: white;
+                  svg{
+                    color: white !important;
+                  }
+                  .text{
+                    margin-right: 5px;
+                    width: 40px;
+                  }
+                }
+              }
+            }
             .shortLinkTitle{
               height: 100%;
               @include flex(space-between, unset, true);
@@ -113,13 +165,13 @@
                 font-family: Montserrat;
                 font-weight: 600;
                 font-size: 20px;
-                color: rgb(94, 94, 94); 
+                color: rgb(94, 94, 94);  
               }
               .shortLinkTitleSub{
                 font-family: 'Montserrat';
                 margin-right: 5px;
-                color: rgba(0, 0, 0, 0.25); 
-              }
+                color: rgba(0, 0, 0, 0.25);
+              }  
             }
             .shortLinkButton{
               margin-left: 10px;
@@ -138,156 +190,113 @@
               }
               &:hover{
                 background-color: #6b21e3;
-                color: white;
-                svg{
-                  color: white !important;
-                }
+                  color: white;
+                  svg{
+                    color: white !important;
+                  }
                 .text{
-                  margin-right: 5px;
+                  margin-left: 5px;
                   width: 40px;
                 }
               }
             }
           }
-          .shortLinkTitle{
-            height: 100%;
-            @include flex(space-between, unset, true);
-            flex-direction: column;
-            .shortLinkTitleMain{
-              font-family: Montserrat;
-              font-weight: 600;
-              font-size: 20px;
-              color: rgb(94, 94, 94);  
-            }
-            .shortLinkTitleSub{
-              font-family: 'Montserrat';
-              margin-right: 5px;
-              color: rgba(0, 0, 0, 0.25);
-            }  
-          }
-          .shortLinkButton{
-            margin-left: 10px;
-            border: none;
-            padding: 10px;
+          .empty{
+            width: 700px;
+            height: 90px;
             border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.05);
-            @include flex(space-between, center);
-            color: rgb(94, 94, 94);
-            .text{
-              margin-right: 0;
-              font-family: Montserrat;
-              font-size: 15px;
-              width: 0;
-              transition: 0.3s;
-            }
-            &:hover{
-              background-color: #6b21e3;
-                color: white;
-                svg{
-                  color: white !important;
-                }
-              .text{
-                margin-left: 5px;
-                width: 40px;
+            background-color: rgba(128, 128, 128, 0.1);
+            padding: 10px 20px;
+            margin-bottom: 15px;
+            @include flex(center, center);
+            flex-direction: column;
+            .emptyImg{
+              background-color: rgba(0, 0, 0, 0.05);
+              height: 50px;
+              width: 50px;
+              border-radius: 50%;
+              @include flex(center, center);
+              img{
+                width: 50%;
               }
             }
-          }
-        }
-        .empty{
-          width: 700px;
-          height: 90px;
-          border-radius: 10px;
-          background-color: rgba(128, 128, 128, 0.1);
-          padding: 10px 20px;
-          margin-bottom: 15px;
-          @include flex(center, center);
-          flex-direction: column;
-          .emptyImg{
-            background-color: rgba(0, 0, 0, 0.05);
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
-            @include flex(center, center);
-            img{
-              width: 50%;
+            .emptyText{
+              margin-top: 5px;
+              font-family: Montserrat;
+              font-size: 15px;
+              color: grey;
             }
-          }
-          .emptyText{
-            margin-top: 5px;
-            font-family: Montserrat;
-            font-size: 15px;
-            color: grey;
           }
         }
       }
     }
-  }
-  .homeContentRight{
-    margin-left: 20px;
-    width: calc(100% - 830px);
-    max-width: 700px;
-    .status{
-      background-color: white;
-      padding: 0 30px;
-      padding-bottom: 30px;
-      border-radius: 20px;
-      margin-bottom: 20px;
-      .statusHeading{
-        font-family: Montserrat;
-        font-weight: 700;
-        font-size: 25px;
-        padding: 20px 0;
-      }
-      .statusContent{
-        width: 100%;
-        @include flex(space-between, center);
-        flex-direction: column;
-        .statusContentBlock{
-          height: 60px;
-          width: calc(100% - 40px);
-          background-color: rgba(128, 128, 128, 0.1);
-          border-radius: 20px;
-          margin-bottom: 15px;
-          padding: 0 20px;
-          @include flex(space-between, center);
-          .statusContentBlockText{
-            font-family: Montserrat;
-            span{
-              display: block;
-            }
-            .statusContentBlockTextName{
-              font-size: 18px;
-            }
-            .statusContentBlockTextLink{
-              font-size: 15px;
-              color: grey;
-              margin-top: 3px;
-            }
-          }
-          .statusContentBlockStatus{
-            .scbsDot{
-              display: inline-block;
-              width: 10px;
-              height: 10px;
-              border-radius: 50%;
-              margin-right: 5px;
-            }
-            .scbsText{
-              font-family: Montserrat;
-            }
-          }
-        }
-        .empty{
-          height: 120px;
-          width: calc(100% - 40px);
-          background-color: rgba(128, 128, 128, 0.1);
-          border-radius: 10px;
-          margin-bottom: 15px;
-          padding: 0 20px;
-          @include flex(center, center);
+    .homeContentRight{
+      margin-left: 20px;
+      width: calc(100% - 830px);
+      max-width: 700px;
+      .status{
+        background-color: white;
+        padding: 0 30px;
+        padding-bottom: 30px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+        .statusHeading{
           font-family: Montserrat;
-          font-size: 15px;
-          color: grey;
+          font-weight: 700;
+          font-size: 25px;
+          padding: 20px 0;
+        }
+        .statusContent{
+          width: 100%;
+          @include flex(space-between, center);
+          flex-direction: column;
+          .statusContentBlock{
+            height: 60px;
+            width: calc(100% - 40px);
+            background-color: rgba(128, 128, 128, 0.1);
+            border-radius: 20px;
+            margin-bottom: 15px;
+            padding: 0 20px;
+            @include flex(space-between, center);
+            .statusContentBlockText{
+              font-family: Montserrat;
+              span{
+                display: block;
+              }
+              .statusContentBlockTextName{
+                font-size: 18px;
+              }
+              .statusContentBlockTextLink{
+                font-size: 15px;
+                color: grey;
+                margin-top: 3px;
+              }
+            }
+            .statusContentBlockStatus{
+              .scbsDot{
+                display: inline-block;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                margin-right: 5px;
+              }
+              .scbsText{
+                font-family: Montserrat;
+              }
+            }
+          }
+          .empty{
+            height: 120px;
+            width: calc(100% - 40px);
+            background-color: rgba(128, 128, 128, 0.1);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            padding: 0 20px;
+            @include flex(center, center);
+            font-family: Montserrat;
+            font-size: 15px;
+            color: grey;
+          }
         }
       }
     }

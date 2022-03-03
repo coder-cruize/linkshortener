@@ -1,13 +1,13 @@
 /* eslint-disable no-useless-escape */
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { BsGoogle } from "react-icons/bs";
-import "./css/auth.css";
-import { BiLoaderAlt } from "react-icons/bi";
+import toast from "react-hot-toast";
 import useValidateRegex, { useValidateListRegex } from "../utils/validator";
 import { dbActions } from "../utils/crud";
-import toast from "react-hot-toast";
 import AppContext from "../utils/appcontext";
+import { BsGoogle } from "react-icons/bs";
+import { BiLoaderAlt } from "react-icons/bi";
+import "./css/auth.css";
 
 function SignUp() {
   const [name, checkName, validName] = useValidateRegex(null, /[A-Za-z]{3,}/);

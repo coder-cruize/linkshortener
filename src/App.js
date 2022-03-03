@@ -1,13 +1,13 @@
 import { useState, Suspense, lazy } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import "./App.css";
-// Pages and Components
+import { useModal } from "./components/modal";
+import Loader from "./components/loader";
 import { Authentication, useData } from "./utils/authentication";
 import AppContext from "./utils/appcontext";
-import Loader from "./components/loader";
 import { MdOutlineErrorOutline, MdOutlineCheckCircle } from "react-icons/md";
-import { useModal } from "./components/modal";
+import "./App.css";
+
 const Admin = lazy(() => import("./pages/Admin"));
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));

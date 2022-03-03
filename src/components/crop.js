@@ -51,17 +51,15 @@ export default function Crop({userCrop, img}) {
     }, []);
     
     return (
-        <div style={{width: '100%', height: '100%', backgroundColor: 'transparent'}}>
-            <div style={{width: '100%', height: '100%'}}>
-                <ReactCrop
-                    src={upImg}
-                    onImageLoaded={onLoad}
-                    crop={crop}
-                    onChange={(c) => setCrop(c)}
-                    onComplete={(c) => setCompletedCrop(c)}
-                />
-            </div>
+        <>
+            <ReactCrop
+                src={upImg}
+                onImageLoaded={onLoad}
+                crop={crop}
+                onChange={(c) => {setCrop(c)}}
+                onComplete={(c) => {setCompletedCrop(c);console.log('done')}}
+            />
             <canvas ref={previewCanvasRef} style={{width: '100px', height: '100px', display: 'none'}}/>
-        </div>
+        </>
     );
 }

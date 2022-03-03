@@ -1,5 +1,5 @@
-import { Navigate, useLocation } from "react-router-dom";
 import {Suspense, useEffect, useState} from 'react'
+import { Navigate, useLocation } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { ref, child, onValue } from "firebase/database";
 import { auth, rtdb } from "../firebaseClient";

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'
-import { Helmet } from "react-helmet";
 import { rtdb } from '../firebaseClient';
 import { set, increment, get, child, ref } from 'firebase/database';
+import { Helmet } from "react-helmet";
 import Loader from '../components/loader';
 import NotFound from '../components/notfound';
 

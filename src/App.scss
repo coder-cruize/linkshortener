@@ -18,6 +18,11 @@
   padding: 0;
   text-decoration: none;
 }
+button{
+  &:hover{
+    cursor: pointer;
+  }
+}
 body{
   padding: 0;
   margin: 0;

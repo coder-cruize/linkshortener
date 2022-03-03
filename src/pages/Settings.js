@@ -2,8 +2,8 @@ import { useContext, useRef, useState } from "react";
 import { storage } from "../firebaseClient";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
-import Crop from "../components/crop";
 import toast from "react-hot-toast";
+import Crop from "../components/crop";
 import AppContext from "../utils/appcontext";
 
 export default function Settings() {
@@ -56,10 +56,9 @@ export default function Settings() {
     <>
       <h1>HI, {appData.user.displayName || "User"}</h1>
       <div
-        className="popup"
         style={{
-          width: "500px",
-          minHeight: "300px",
+          width: "100px",
+          minHeight: "60px",
           backgroundColor: "grey",
           borderRadius: "10px",
         }}

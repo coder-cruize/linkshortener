@@ -1,5 +1,5 @@
-import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebaseClient";
+import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 export const dbActions = {
   signUp: async (name, email, password) => {

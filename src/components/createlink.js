@@ -17,9 +17,10 @@ export default function CreateLink({ unsubscribe }){
             e.preventDefault();
             setSubmitLoading(true);
             // todo create link in firebase
+            close()
         }
-        function close(e){
-            e.preventDefault();
+        function close(e=null){
+            if(e !== null) e.preventDefault();
             setModal(null);
             unsubscribe();
         }

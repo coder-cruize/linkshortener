@@ -1,5 +1,5 @@
 import { auth } from "../firebaseClient";
-import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword } from "firebase/auth";
 
 export const dbActions = {
   signUp: async (email, password) => {
@@ -22,7 +22,6 @@ export const dbActions = {
       await signOut(auth);
     } catch (error) {
       console.log("Error logging out");
-      // if(error.code === 'auth/email-already-in-use') throw new Error('Email already exists.')
     }
   }
 }

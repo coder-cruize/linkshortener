@@ -1,0 +1,35 @@
+.signout{
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  .signoutText{
+    font-family: Nunito;
+    font-size: 20px;
+  }
+  .signoutBtns{
+    text-align: right;
+    button{
+      margin-right: 10px;
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      background-color: transparent;
+      border-radius: 5px;
+      font-family: Nunito;
+      transition: 0.3s;
+    }
+    .signoutBtnsSignout{
+      color: rgb(55, 55, 55);
+      &:hover{
+        color: red;
+        background-color: #e3212113;
+      }
+    }
+    .signoutBtnsCancel{
+      color: grey;
+      &:hover{
+        background-color: rgb(242, 242, 242);
+      }
+    }
+  }
+}

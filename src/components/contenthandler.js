@@ -4,8 +4,8 @@ import { RiErrorWarningFill } from "react-icons/ri";
 import "./css/contenthandler.css";
 
 export default function ErrorHandler({ children }) {
-  // todo change (false) to (appData.data !== false)
-  if (false) return <>{children}</>;
+  const appData = useContext(AppContext)
+  if (appData.data !== false) return <>{children}</>;
   return (
     <div className="pageErrorFrame">
       <div className="pageError">
@@ -26,10 +26,8 @@ export default function ErrorHandler({ children }) {
         </div>
       </div>
     </div>
-    // todo build error component
   );
 }
-// todo check loader that renders component error. it is not centering
 export function SkeletonLoader({ children, style }) {
   const [loading, setLoading] = useState(true);
   const appData = useContext(AppContext);

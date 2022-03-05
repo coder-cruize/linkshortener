@@ -1,11 +1,13 @@
 import { useContext, useLayoutEffect, useState } from "react";
 import { Link } from 'react-router-dom'
+import CreateLink from "../components/createlink";
 import AppContext from "../utils/appcontext";
 import folder from "../images/folder.png";
 import './css/links.css'
 
 export default function Links() {
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false)
   const appData = useContext(AppContext);
   useLayoutEffect(() => {
     setLoading(appData.data == null);
@@ -27,9 +29,10 @@ export default function Links() {
   }
   return appData.data !== false ? (
     <>
+    {showModal && <CreateLink unsubscribe={() => setShowModal(false)}/>}
     <section className="linksContent">
       <h1 className="linksHeading">Links</h1>
-      <button className="linksButton">Create New Link</button>
+      <button className="linksButton" onClick={() => setShowModal(true)}>Create New Link</button>
       <div className="linkItemContainer">
         <SkeletonLoader style={{width: '100%', height: 100, borderRadius: 10}}>
           {appData.data ? (

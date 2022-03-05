@@ -18,6 +18,9 @@
   padding: 0;
   text-decoration: none;
 }
+::placeholder{
+  color: rgb(206, 206, 206)
+}
 button{
   &:hover{
     cursor: pointer;

@@ -39,7 +39,7 @@ export default function LinksData() {
   }
   return appData.data !== false ? (
     <>
-    <section className="linksContent">
+    <section className="linksDataContent">
       <h1 className="linksHeading">
         <Link to='/admin/links'><IoIosArrowBack size={30} color='rgb(116, 116, 116)' /></Link>
         <SkeletonLoader style={{width: 100, height: 30, borderRadius: 5}}>/{linkId}</SkeletonLoader>

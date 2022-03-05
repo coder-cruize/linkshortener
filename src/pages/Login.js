@@ -25,8 +25,8 @@ function Login() {
     e.preventDefault();
     dbActions.signIn(email, password)
     .then(() => {
-      toast.success(`Welcome back, ${appData.user.displayName}`)
       appData.newUser.set(false);
+      toast.success(`Welcome back, ${appData.user.displayName}`)
     })
     .catch((err) => {
       toast.error(err.message);

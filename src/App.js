@@ -29,7 +29,7 @@ export default function App() {
     data: appData,
     reload: Reload,
     user: user,
-    newUser: newUser,
+    newUser: newUser
   };
   //* if loader is true render loader after 1 second check if all resources are ready if ready render main app
   if (loader) {
@@ -46,15 +46,13 @@ export default function App() {
     return <Loader />;
   }
   return (
-    // Todo: for each page add a component to render in case appData = false (error). check home.js for example
-    // Todo: change the default loader for suspended components
     <>
       <AppContext.Provider value={appDataContext}>
         <Routes>
           <Route
             path="*"
             element={
-              <Suspense fallback={<>Loading...</>}>
+              <Suspense fallback={<Loader suspended />}>
                 <NotFound loc="root" />
               </Suspense>
             }
@@ -92,7 +90,7 @@ export default function App() {
             <Route
               path="*"
               element={
-                <Suspense fallback={<>Loading...</>}>
+                <Suspense fallback={<Loader suspended />}>
                   <NotFound loc="admin" />
                 </Suspense>
               }
@@ -100,7 +98,7 @@ export default function App() {
             <Route
               path="home"
               element={
-                <Suspense fallback={<>Loading...</>}>
+                <Suspense fallback={<Loader suspended />}>
                   <Home />
                 </Suspense>
               }
@@ -108,7 +106,7 @@ export default function App() {
             <Route
               path="links"
               element={
-                <Suspense fallback={<>Loading...</>}>
+                <Suspense fallback={<Loader suspended />}>
                   <Links />
                 </Suspense>
               }
@@ -116,7 +114,7 @@ export default function App() {
             <Route
               path="links/:linkId"
               element={
-                <Suspense fallback={<>Loading...</>}>
+                <Suspense fallback={<Loader suspended />}>
                   <LinksData />
                 </Suspense>
               }
@@ -124,7 +122,7 @@ export default function App() {
             <Route
               path="test"
               element={
-                <Suspense fallback={<>Loading...</>}>
+                <Suspense fallback={<Loader suspended />}>
                   <Test />
                 </Suspense>
               }
@@ -132,7 +130,7 @@ export default function App() {
             <Route
               path="settings"
               element={
-                <Suspense fallback={<>Loading...</>}>
+                <Suspense fallback={<Loader suspended />}>
                   <Settings />
                 </Suspense>
               }
@@ -141,7 +139,7 @@ export default function App() {
           <Route
             path="/m/:linkId"
             element={
-              <Suspense fallback={<>Loading...</>}>
+              <Suspense fallback={<Loader suspended />}>
                 <ShortLink />
               </Suspense>
             }

@@ -1,6 +1,6 @@
-import { lazy, useContext } from "react";
+import { lazy, useContext, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import { dbActions } from "../utils/crud";
+import Signout from "../components/signout";
 import AppContext from "../utils/appcontext";
 import { MdLogout } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
@@ -9,10 +9,12 @@ import logo from "../images/logo.svg";
 const OnBoard = lazy(() => import("../components/onboard"));
 
 export default function Admin() {
+  const [showModal, setShowModal] = useState(false)
   const appData = useContext(AppContext);
-  
+
   return (
     <div className="bodyContainer">
+      {showModal && <Signout unsubscribe={() => setShowModal(false)}/>}
       {appData.newUser.val && <OnBoard />}
       <section className="sideNav">
         <div className="topItems">
@@ -60,7 +62,7 @@ export default function Admin() {
               <img src={appData.user.photoURL} alt={appData.user.displayName} />
             )}
           </NavLink>
-          <button className="logout" onClick={dbActions.signOut}>
+          <button className="logout" onClick={() => setShowModal(true)}>
             <MdLogout size={20} color="red" />
           </button>
         </div>

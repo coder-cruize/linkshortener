@@ -39,6 +39,7 @@ export default function OnBoard(){
                     .then(() => {
                         setModal(null)
                         toast(`You're free to explore now, ${appData.user.displayName}. 😉`)
+                        appData.newUser.set(false)
                     })
                     .catch(() => {
                         toast.error('An error occured while setting name. Try again');

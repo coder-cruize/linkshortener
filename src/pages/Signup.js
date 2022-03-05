@@ -28,7 +28,6 @@ function SignUp() {
     e.preventDefault();
     dbActions.signUp(email.trim(), password)
     .then(() => {
-      toast.success(`Welcome, ${appData.user.displayName}`)
       appData.newUser.set(true);
     })
     .catch((err) => {

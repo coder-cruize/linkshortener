@@ -1,7 +1,7 @@
-import { useContext, useLayoutEffect, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useModal } from "../components/modal";
+import ErrorHandler, { SkeletonLoader } from "../components/contenthandler";
 import AppContext from "../utils/appcontext";
 import { MdContentPaste } from "react-icons/md";
 import { FiEdit3 } from "react-icons/fi";
@@ -11,18 +11,12 @@ import folder from "../images/folder.png";
 import "./css/home.css";
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
   const appData = useContext(AppContext);
-  const { setModal } = useModal()
-
-  useLayoutEffect(() => {
-    setLoading(appData.data == null);
-  }, [appData.data]);
   function ShortLinkItem({ url, name, linkId }) {
     const copy = () => {
       navigator.clipboard.writeText(url);
       toast.success("Copied to clipboard");
-    }
+    };
     return (
       <>
         <div className="shortLink">
@@ -52,26 +46,8 @@ export default function Home() {
       </>
     );
   }
-  function SkeletonLoader({ children, style }) {
-    if (loading)
-      return (
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            animation: "skeleton-loading 1s linear infinite alternate",
-            ...style,
-          }}
-        ></div>
-      );
-    return children || null;
-  }
-  function createLink() {
-    setModal("Links");
-    //Todo: create links here
-  }
-  return appData.data !== false ? (
-    <>
+  return (
+    <ErrorHandler>
       <section className="homeContent">
         <h1 className="homeHeading">Home</h1>
         <section className="homeContentFrame">
@@ -156,9 +132,6 @@ export default function Home() {
             <section className="links">
               <h1 className="linksHeading">
                 <span className="linksHeadingText">My links</span>
-                <button className="linksHeadingBtn" onClick={createLink}>
-                  + Add New Link
-                </button>
               </h1>
               <div className="linksContent">
                 <SkeletonLoader
@@ -253,10 +226,6 @@ export default function Home() {
           </div>
         </section>
       </section>
-    </>
-  ) : (
-    <>
-      <span>'Error'</span>
-    </>
+    </ErrorHandler>
   );
 }

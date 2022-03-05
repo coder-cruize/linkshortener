@@ -1,9 +1,9 @@
 import "./css/loader.css";
 
-export default function Loader() {
-    return (
-      <div className="loaderFrame">
-        <span className="loader"></span>
-      </div>
-    );
+export default function Loader({ suspended=false }) {
+  return (
+    <div className={suspended ? "suspendedLoaderFrame" : "loaderFrame"}>
+      <span className="loader"></span>
+    </div>
+  );
 }

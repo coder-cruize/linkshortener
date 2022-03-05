@@ -1,0 +1,60 @@
+@mixin flex($x, $y, $z:false) {
+  @if($z==true) {
+    display: inline-flex;
+  }
+  @else{
+    display: flex;  
+  }
+  justify-content: $x;
+  align-items: $y;
+}
+.pageErrorFrame{
+  width: 100%;
+  height: 100%;
+  @include flex(center, center);
+  .pageError{
+    max-width: 400px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px 40px;
+    @include flex(space-between, center);
+    flex-direction: column;
+    .pageErrorIcon{
+      display: block;
+    }
+    .pageErrorHeading{
+      font-family: Montserrat;
+      color: rgb(80, 80, 80);
+    }
+    .pageErrorText{
+      font-family: Nunito;
+      margin-top: 10px;
+      text-align: center;
+      color: rgb(80, 80, 80);
+    }
+    .pageErrorList{
+      color: rgb(141, 141, 141);
+      font-family: Nunito;
+      width: calc(100% - 30px);
+      margin-left: 30px;
+    }
+    .pageErrorFooter{
+      width: 100%;
+      margin-top: 10px;
+      text-align: center;
+      button{
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        background-color: #e5d5ff;
+        color: #6b21e3;
+        font-family: Nunito;
+        transition: 0.3s;
+        &:hover{
+          background-color: #6b21e3;
+          color: white;
+        }
+      }
+    }
+  }
+}

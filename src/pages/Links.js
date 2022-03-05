@@ -1,34 +1,16 @@
-import { useContext, useLayoutEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from 'react-router-dom'
+import ErrorHandler, { SkeletonLoader } from "../components/contenthandler";
 import CreateLink from "../components/createlink";
 import AppContext from "../utils/appcontext";
 import folder from "../images/folder.png";
 import './css/links.css'
 
 export default function Links() {
-  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false)
   const appData = useContext(AppContext);
-  useLayoutEffect(() => {
-    setLoading(appData.data == null);
-  }, [appData.data]);
-  function SkeletonLoader({ children, style }) {
-    if (loading)
-      return (
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            animation: "skeleton-loading 1s linear infinite alternate",
-            ...style,
-          }}
-        ></div>
-      );
-    if (children) return children;
-    else return "";
-  }
-  return appData.data !== false ? (
-    <>
+  return (
+    <ErrorHandler>
     {showModal && <CreateLink unsubscribe={() => setShowModal(false)}/>}
     <section className="linksContent">
       <h1 className="linksHeading">Links</h1>
@@ -59,10 +41,6 @@ export default function Links() {
         </SkeletonLoader>
       </div>
     </section>
-    </>
-  ) : (
-    <>
-      <span>'Error'</span>
-    </>
-  );
+    </ErrorHandler>
+  )
 }

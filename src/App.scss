@@ -85,11 +85,12 @@ body{
       @include flex(center, center);
       border: none;
       padding: 0;
+      background-color: rgb(218, 218, 218);
     }
     .user{
       img{
-        width: 100%;
-        height: 100%;
+        width: 90%;
+        height: 90%;
         border-radius: inherit;
       }
     }
@@ -113,70 +114,4 @@ body{
   padding: 15px 0;
   padding-right: 15px;
   overflow-y: auto;
-  .adminNotFound{
-    width: 100%;
-    height: 100%;
-    @include flex(center, center);
-    .heroCard{
-      width: 400px;
-      height: 220px;
-      background-color: white;
-      font-family: Dongle;
-      border-radius: 10px;
-      @include flex(space-evenly, center);
-      flex-direction: column;
-      padding: 30px;
-      .heroCardLogo{
-        width: 100px;
-        margin-bottom: 30px;
-      }
-      .heroCardText{
-        text-align: center;
-        font-size: 40px;
-        font-weight: 400;
-        color: #6b21e3;
-        line-height: 30px;
-      }
-      .heroCardLink{
-        text-decoration: underline;
-        text-decoration-thickness: 1px;
-        color: #21E386;
-        font-size: 35px;
-        font-weight: 400;
-      }
-    }
-  }
-}
-.rootNotFound{
-  width: 100vw;
-  height: 100vh;
-  @include flex(center, center);
-  .heroCard{
-    width: 400px;
-    // height: 220px;
-    background-color: white;
-    font-family: Dongle;
-    border-radius: 10px;
-    @include flex(space-evenly, center);
-    flex-direction: column;
-    padding: 30px;
-    .heroCardLogo{
-      width: 100px;
-      margin-bottom: 30px;
-    }
-    .heroCardText{
-      text-align: center;
-      font-size: 40px;
-      font-weight: 400;
-      color: #6b21e3;
-      line-height: 30px;
-    }
-    .heroCardLink{
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      color: #21E386;
-      font-size: 35px;
-      font-weight: 400;
-    }
-  }
 }

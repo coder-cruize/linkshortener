@@ -1,16 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import logo from "../images/logo.svg";
+import './css/notfound.css'
 
 export default function NotFound({ loc }) {
     const navigate = useNavigate();
     let classname;
-    if(loc === 'root') classname = "rootNotFound";
-    if(loc === 'admin') classname = "rootNotFound";
-    if(loc === 'link') classname = "rootNotFound";
+    if(loc === 'root' || loc === 'link') classname = "rootNotFound";
+    if(loc === 'admin') classname = "adminNotFound";
     function Destination(e){
       e.preventDefault();
-      if(loc === 'root') navigate(-1);
-      if(loc === 'admin') navigate(-1);
+      if(loc === 'root' || loc === 'admin') navigate(-1);
       if(loc === 'link') navigate("/admin/home");
     }
     return (

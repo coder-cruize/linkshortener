@@ -38,6 +38,7 @@ export default function CreateLink({ unsubscribe }) {
     }
     function close(e = null) {
       if (e !== null) e.preventDefault();
+      setSubmitLoading(false)
       setModal(null);
       unsubscribe();
     }
@@ -85,7 +86,7 @@ export default function CreateLink({ unsubscribe }) {
       false,
       unsubscribe
     );
-  }, [name, url]);
+  }, [name, url, submitLoading]);
   return null;
 }
 

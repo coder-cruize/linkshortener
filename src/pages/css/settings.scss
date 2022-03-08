@@ -1,0 +1,27 @@
+@mixin flex($x, $y, $z:false) {
+  @if($z==true) {
+    display: inline-flex;
+  }
+  @else{
+    display: flex;  
+  }
+  justify-content: $x;
+  align-items: $y;
+}
+
+.settingsContent{
+  .settingsHeading{
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 25px;
+    padding-top: 5px;
+    padding-bottom: 20px;
+    color: #6b21e3;
+    margin: 0;
+  }
+  .testxx{
+    animation: skeleton-loading;
+    padding: 10px;
+    background-color: red;
+  }
+}

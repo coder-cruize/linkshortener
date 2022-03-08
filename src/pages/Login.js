@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import useValidateRegex from "../utils/validator";
-import { dbActions } from "../utils/crud";
+import { dbActions } from "../utils/db";
 import AppContext from "../utils/appcontext";
 import { BiLoaderAlt } from "react-icons/bi";
 import "./css/auth.css";
@@ -23,15 +23,16 @@ function Login() {
   const submitForm = async (e) => {
     setSubmitLoading(true);
     e.preventDefault();
-    dbActions.signIn(email, password)
-    .then(() => {
-      appData.newUser.set(false);
-      toast.success(`Welcome back, ${appData.user.displayName}`)
-    })
-    .catch((err) => {
-      toast.error(err.message);
-      setSubmitLoading(false);
-    });
+    dbActions
+      .signIn(email, password)
+      .then(() => {
+        appData.newUser.set(false);
+        toast.success(`Welcome back, ${appData.user.displayName}`);
+      })
+      .catch((err) => {
+        toast.error(err.message);
+        setSubmitLoading(false);
+      });
   };
   return (
     <section className="pageFrame">
@@ -89,7 +90,9 @@ function Login() {
           </Link>
         </div>
         <button
-          onClick={() => dbActions.signIn("lekanalowooja@yahoo.com", "Developer@2022")}
+          onClick={() =>
+            dbActions.signIn("lekanalowooja@yahoo.com", "Developer@2022")
+          }
         >
           Dummy Login
         </button>

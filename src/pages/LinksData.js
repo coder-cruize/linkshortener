@@ -1,16 +1,19 @@
 import { useContext } from "react";
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import html2canvas from "html2canvas";
 import QrCode from "../components/qr";
 import ErrorHandler, { SkeletonLoader } from "../components/contenthandler";
 import AppContext from "../utils/appcontext";
+import { dbActions } from '../utils/db'
 import { IoIosArrowBack } from 'react-icons/io'
 import './css/linksdata.css'
+import toast from "react-hot-toast";
 
 export default function LinksData() {
   const appData = useContext(AppContext);
   const { linkId } = useParams()
+  const navigate = useNavigate()
   function Download() {
     html2canvas(document.querySelector("#react-qrcode-logo")).then((canvas) => {
       const link = document.createElement("a");
@@ -19,6 +22,13 @@ export default function LinksData() {
       link.click();
     });
   }
+  function deleteLink(){
+    navigate('/admin/links');
+		dbActions.deleteLink(appData.user.uid, linkId)
+    toast.success('Link Deleted')
+    appData.reload()
+  }
+  console.log(appData.data)
   return (
     <ErrorHandler>
     <section className="linksDataContent">
@@ -32,6 +42,7 @@ export default function LinksData() {
 
       <QrCode data={appData.data.links[linkId].fullLink} />
       <button onClick={Download}>Download</button>
+      <button onClick={deleteLink}>delete</button>
     </ErrorHandler>
   )
 }

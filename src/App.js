@@ -166,4 +166,3 @@ export default function App() {
     </>
   );
 }
-//todo make the user unable to set the app url as a link or else it can cause endless reloading

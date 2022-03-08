@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import useValidateRegex, { useValidateListRegex } from "../utils/validator";
-import { dbActions } from "../utils/crud";
+import { dbActions } from "../utils/db";
 import AppContext from "../utils/appcontext";
 import { BsGoogle } from "react-icons/bs";
 import { BiLoaderAlt } from "react-icons/bi";
@@ -14,26 +14,30 @@ function SignUp() {
     null,
     /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
   );
-  const [password, checkPassoword, passwordStrength] = useValidateListRegex(null, [
-    /[a-z]+/,
-    /[A-Z]+/,
-    /[0-9]+/,
-    /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/,
-  ]);
+  const [password, checkPassoword, passwordStrength] = useValidateListRegex(
+    null,
+    [
+      /[a-z]+/,
+      /[A-Z]+/,
+      /[0-9]+/,
+      /[-._!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/,
+    ]
+  );
   const [submitLoading, setSubmitLoading] = useState(false);
   const appData = useContext(AppContext);
 
   function submitForm(e) {
     setSubmitLoading(true);
     e.preventDefault();
-    dbActions.signUp(email.trim(), password)
-    .then(() => {
-      appData.newUser.set(true);
-    })
-    .catch((err) => {
-      toast.error(err.message);
-      setSubmitLoading(false);
-    });
+    dbActions
+      .signUp(email.trim(), password)
+      .then(() => {
+        appData.newUser.set(true);
+      })
+      .catch((err) => {
+        toast.error(err.message);
+        setSubmitLoading(false);
+      });
   }
 
   return (

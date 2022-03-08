@@ -1,10 +1,9 @@
 import { Suspense, useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
-import { ref, child, onValue } from "firebase/database";
-import { auth, rtdb } from "../firebaseClient";
-import toast from "react-hot-toast";
+import { auth } from "../firebaseClient";
 import Loader from "../components/loader";
+import { dbActions } from "./db";
 
 export const Authentication = {
   Required: ({ auth, children }) => {
@@ -35,43 +34,13 @@ export function useData() {
         if (!isAuthenticated) setAuthentication(true);
         if (reload !== null) currentUser.reload();
         setUser(currentUser);
-        //* fetch app data
-        (async () => {
-          await onValue(
-            child(ref(rtdb), `users/${currentUser.uid}`),
-            (snapshot) => {
-              try {
-                let dataBoilerPlate = {
-                  linkNum: 0,
-                  clickNum: 0,
-                  links: {},
-                };
-                if (snapshot.val()) {
-                  let data = { ...snapshot.val() };
-                  Object.keys(data).forEach(async (key) => {
-                    await onValue(child(ref(rtdb), `links/${key}`), (value) => {
-                      try {
-                        data[key] = {
-                          ...data[key],
-                          clicks: value.val()?.clicks,
-                        };
-                        dataBoilerPlate.linkNum += 1;
-                        dataBoilerPlate.clickNum += data[key].clicks;
-                        dataBoilerPlate.links = { ...data };
-                      } catch (error) {
-                        toast.error(error.message);
-                      }
-                    });
-                  });
-                }
-                setAppData(dataBoilerPlate);
-              } catch (error) {
-                console.log(error);
-                setAppData(false);
-              }
-            }
-          );
-        })();
+        dbActions.getAppData(currentUser.uid)
+        .then((data) => {
+          setAppData(data)
+        })
+        .catch(() => {
+          setAppData(false)
+        })
       }
       //* otherwise only permit entry to login, signup and shortlink
       else {
@@ -81,7 +50,6 @@ export function useData() {
         setUser(false);
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reload, isUserNew]);
   const ReloadNow = () => {
     setReload(!reload);

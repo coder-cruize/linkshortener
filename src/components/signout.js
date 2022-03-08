@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useModal } from "../components/modal";
-import { dbActions } from "../utils/crud";
+import { dbActions } from "../utils/db";
 import "./css/signout.css";
 
 export default function Signout({ unsubscribe }) {
@@ -35,7 +35,6 @@ export default function Signout({ unsubscribe }) {
           </button>
         </div>
       </div>,
-      // todo use crud to signout
       false,
       unsubscribe
     );

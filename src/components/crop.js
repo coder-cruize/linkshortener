@@ -7,7 +7,8 @@ export default function Crop({userCrop, img}) {
     const [upImg, setUpImg] = useState();
     const imgRef = useRef(null);
     const previewCanvasRef = useRef(null);
-    const [crop, setCrop] = useState({ unit: '%', width: 20, aspect: 1 / 1 });
+    const [crop, setCrop] = useState({ unit: '%', width: 70, aspect: 1 / 1 , x: 15, y: 15,});
+   
     const [completedCrop, setCompletedCrop] = useState(null);
 
     useEffect(() => {
@@ -57,9 +58,10 @@ export default function Crop({userCrop, img}) {
                 onImageLoaded={onLoad}
                 crop={crop}
                 onChange={(c) => {setCrop(c)}}
-                onComplete={(c) => {setCompletedCrop(c);console.log('done')}}
+                onComplete={(c) => { setCompletedCrop(c) }}
+                imageStyle = {{objectFit: 'contain', maxWidth: '100%', maxHeight: '200px'}}
             />
-            <canvas ref={previewCanvasRef} style={{width: '100px', height: '100px', display: 'none'}}/>
+            <canvas ref={previewCanvasRef} style={{maxWidth: '100%', height: '200px', display: 'none'}}/>
         </>
     );
 }

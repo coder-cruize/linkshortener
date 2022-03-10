@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef, useState, } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { updateProfile } from "firebase/auth";
 import toast from "react-hot-toast";
 import { useModal } from "../components/modal";
 import AppContext from "../utils/appcontext";
@@ -12,6 +11,7 @@ import link from '../images/onboard_link.png'
 import analytics from '../images/onboard_analytics.png'
 import completed from '../images/onboard_completed.png'
 import './css/onboard.css'
+import { dbActions } from "../utils/db";
 
 export default function OnBoard(){
     const [page, setPage] = useState(1)
@@ -34,18 +34,16 @@ export default function OnBoard(){
             }
             const completeOnboarding = () => {
                 setSubmitLoading(true);
-                (async () => {
-                    await updateProfile(appData.user, {displayName: (name.charAt(0).toUpperCase() + name.slice(1))})
-                    .then(() => {
-                        setModal(null)
-                        toast(`You're free to explore now, ${appData.user.displayName}. 😉`)
-                        appData.newUser.set(false)
-                    })
-                    .catch(() => {
-                        toast.error('An error occured while setting name. Try again');
-                        submitLoading(false)
-                    })
-                })();
+                dbActions.updateUser.name(appData.user, {displayName: (name.charAt(0).toUpperCase() + name.slice(1))})
+                .then(() => {
+                    setModal(null)
+                    toast(`You're free to explore now, ${appData.user.displayName}. 😉`)
+                    appData.newUser.set(false)
+                })
+                .catch(() => {
+                    toast.error('An error occured while setting name. Try again');
+                    submitLoading(false)
+                })
             }
             switch(page) {
                 default:

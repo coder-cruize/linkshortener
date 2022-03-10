@@ -19,9 +19,43 @@
     color: #6b21e3;
     margin: 0;
   }
-  .testxx{
-    animation: skeleton-loading;
-    padding: 10px;
-    background-color: red;
+  .settingsTabsContent{
+    font-family: Nunito;
+    .settingsTab{
+      .settingsTabHeading{
+        .settingsTabHeadingText {
+          font-weight: 700;
+          font-size: 22px;
+          color: #45484f;
+        }
+        .settingsTabHeadingInfo{
+          font-weight: 500;
+          font-size: 16px;
+          color: #80848d;
+        }
+        .settingsTabHeadingLine{
+          margin-top: 10px;
+          border: none;
+          border-top: 2px solid #ced3df;
+        }
+      }
+      .settingsTabContent{
+        *{
+          margin-top: 15px;
+        }
+        .settingsTabContentInput{
+          input{
+            margin-left: 20px;
+            padding: 10px;
+            border: 2px solid #b5bac5;
+            border-radius: 7px;
+            background-color: #e5eaf5;
+            font-family: Montserrat;
+            font-size: 16px;
+            width: 300px;
+          }
+        }
+      }
+    }
   }
 }
